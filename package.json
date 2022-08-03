@@ -16,7 +16,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "deploy": "gh-pages -d web-build",
-    "predeploy": "expo export:web"
+    "predeploy": "expo buildweb"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.2",
