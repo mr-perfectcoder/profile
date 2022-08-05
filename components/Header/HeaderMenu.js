@@ -2,7 +2,7 @@ import { Hidden, Stack, Text, View } from 'native-base'
 import React from 'react'
 import { Linking, TouchableOpacity } from 'react-native'
 
-const HeaderMenu = () => {
+const HeaderMenu = ({ resumeLink }) => {
   return (
     <>
       <Stack
@@ -21,11 +21,7 @@ const HeaderMenu = () => {
             backgroundColor: '#000',
             borderRadius: 25,
           }}
-          onPress={() =>
-            Linking.openURL(
-              'https://drive.google.com/file/d/1lhH53m6v4Qw15CvLGh3lZSG3JmGeaV2M/view?usp=sharing'
-            )
-          }
+          onPress={() => Linking.openURL(resumeLink)}
         >
           <Text color='#fff'>Resume</Text>
         </TouchableOpacity>

@@ -6,17 +6,20 @@ import Logo from './Logo'
 
 const Stack = createNativeStackNavigator()
 
-const MyNav = () => {
+const MyNav = ({ hData }) => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name='Home'
-        options={() => ({
-          headerTitle: () => <Logo />,
-          headerRight: () => <HeaderMenu />,
-        })}
-        component={Home}
-      />
+      {hData && (
+        <Stack.Screen
+          name='Home'
+          options={() => ({
+            headerTitle: () => <Logo />,
+            headerRight: () => <HeaderMenu resumeLink={hData.ResumeLink} />,
+          })}
+          component={Home}
+          initialParams={{ hData: hData }}
+        />
+      )}
     </Stack.Navigator>
   )
 }

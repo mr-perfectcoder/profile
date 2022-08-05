@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { NativeBaseProvider, extendTheme, StatusBar } from 'native-base'
 
 import { NavigationContainer } from '@react-navigation/native'
@@ -33,6 +33,23 @@ export const theme = extendTheme({
 })
 
 export default function App() {
+  const [hData, sethData] = useState([])
+  const getHomePageData = async () => {
+    try {
+      const response = await fetch(
+        'https://fierce-journey-21260.herokuapp.com/api/homepage-portfolio?populate=*'
+      )
+      const json = await response.json()
+      sethData(json.data.attributes)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    getHomePageData()
+  }, [])
+
   let [fontsLoaded] = useFonts({
     OpenSans_400Regular,
     OpenSans_400Regular_Italic,
@@ -44,7 +61,7 @@ export default function App() {
     <NativeBaseProvider theme={theme}>
       <StatusBar style='dark' />
       <NavigationContainer>
-        <MyNav />
+        {hData.length !== 0 && <MyNav hData={hData} />}
       </NavigationContainer>
     </NativeBaseProvider>
   )

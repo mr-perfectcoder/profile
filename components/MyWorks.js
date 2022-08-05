@@ -1,9 +1,25 @@
 import { Heading, Text, View } from 'native-base'
-import React from 'react'
-import { Image } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import Card from './Work/Card'
 
 const MyWorks = () => {
+  const [workData, setworkData] = useState([])
+  const getWorkData = async () => {
+    try {
+      const response = await fetch(
+        'https://fierce-journey-21260.herokuapp.com/api/projects?populate=*'
+      )
+      const json = await response.json()
+      console.log(json.data)
+      setworkData(json.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    getWorkData()
+  }, [])
   const list = [
     {
       name: 'Kiefy Password Manager',
@@ -97,19 +113,27 @@ const MyWorks = () => {
       marginTop='-10px'
     >
       <Heading size='md'>My Works</Heading>
-      <View
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginTop: '20px',
-        }}
-      >
-        {list.map((item, index) => {
-          return <Card key={index.toString()} item={item} tags={item.tags} />
-        })}
-      </View>
+      {workData.length !== 0 && (
+        <View
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginTop: '20px',
+          }}
+        >
+          {workData.map((item, index) => {
+            return (
+              <Card
+                key={index.toString()}
+                item={item.attributes}
+                tags={item.tags}
+              />
+            )
+          })}
+        </View>
+      )}
     </View>
   )
 }

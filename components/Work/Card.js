@@ -56,7 +56,9 @@ const Card = ({ item, tags }) => {
               rounded='md'
               borderWidth={1}
               borderColor='gray.200'
-              source={require('../../assets/p-logo/' + item.logo)}
+              source={{
+                uri: item.logo.data.attributes.url,
+              }}
               alt={item.name}
             />
           </View>
@@ -154,7 +156,7 @@ const Card = ({ item, tags }) => {
           flexWrap: 'wrap',
         }}
       >
-        {tags.map((tag, index) => {
+        {item.tags.data.map((tag, index) => {
           return (
             <View
               style={{
@@ -176,7 +178,7 @@ const Card = ({ item, tags }) => {
                   fontStyle: 'italic',
                 }}
               >
-                #{tag.label}
+                #{tag.attributes.label}
               </Text>
             </View>
           )
